@@ -89,4 +89,88 @@
         </div>
 
     </section>
+
+    <section class="max-w-6xl mx-auto px-6 mt-20">
+
+        <!-- Header -->
+        <div class="mb-10">
+
+            <div class="flex items-center gap-2 text-gray-500 text-sm mb-2">
+                <img src="{{ asset('images/star.png') }}" class="w-4 h-4">
+                <span>FASILITAS</span>
+            </div>
+
+            <h2 class="text-3xl md:text-4xl font-semibold text-gray-800">
+                Beberapa Fasilitas Rafa Kost
+            </h2>
+
+            <p class="text-gray-600 mt-2 max-w-xl">
+                Nikmati berbagai fasilitas yang dirancang untuk menunjang kenyamanan dan kebutuhan harian Anda.
+            </p>
+
+        </div>
+
+        <!-- Card Grid -->
+        <div class="grid md:grid-cols-5 gap-5">
+
+            <!-- Card -->
+            <div class="relative rounded-xl overflow-hidden group">
+                <img src="{{ asset('images/listrik.jpg') }}" class="w-full h-40 object-cover">
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+
+                <div class="absolute bottom-3 left-3 text-white">
+                    <p class="font-semibold">Bebas Listrik</p>
+                    <span class="text-xs opacity-80">(Termasuk)</span>
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="relative rounded-xl overflow-hidden group">
+                <img src="{{ asset('images/air.jpg') }}" class="w-full h-40 object-cover">
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+
+                <div class="absolute bottom-3 left-3 text-white">
+                    <p class="font-semibold">Air</p>
+                    <span class="text-xs opacity-80">(Termasuk)</span>
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="relative rounded-xl overflow-hidden group">
+                <img src="{{ asset('images/parkir.jpg') }}" class="w-full h-40 object-cover">
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+
+                <div class="absolute bottom-3 left-3 text-white">
+                    <p class="font-semibold">Parkiran</p>
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="relative rounded-xl overflow-hidden group">
+                <img src="{{ asset('images/dapur.jpg') }}" class="w-full h-40 object-cover">
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+
+                <div class="absolute bottom-3 left-3 text-white">
+                    <p class="font-semibold">Dapur Bersama</p>
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="relative rounded-xl overflow-hidden group">
+                <img src="{{ asset('images/lokasi.jpg') }}" class="w-full h-40 object-cover">
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+
+                <div class="absolute bottom-3 left-3 text-white">
+                    <p class="font-semibold">Lokasi Strategis</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 </x-guest-layout>
