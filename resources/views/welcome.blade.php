@@ -6,15 +6,23 @@
 
         <img src="{{ asset('images/benner.png') }}" class="w-full h-[660px] object-cover">
 
-        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 bg-black/30"></div>
 
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+        <div class="absolute inset-0 flex flex-col items-center justify-start text-center text-white px-4 pt-28">
 
-            <h1 class="text-4xl md:text-6xl font-medium">
-                Rafa Kost
-            </h1>
+            <div class="flex items-center gap-3">
 
-            <p class="mt-2 text-xl md:text-3xl">
+                <!-- Logo -->
+                <img src="{{ asset('images/secondlogo.png') }}" class="h-11 md:h-14 w-auto">
+
+                <!-- Text -->
+                <h1 class="text-4xl md:text-5xl font-medium leading-none justify-start pt-4">
+                    Rafa Kost
+                </h1>
+
+            </div>
+
+            <p class="mt-2 text-xl md:text-4xl font-medium">
                 Nyaman, Aman, Terjangkau
             </p>
 

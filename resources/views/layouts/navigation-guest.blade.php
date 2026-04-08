@@ -5,13 +5,14 @@
             <!-- Logo -->
             <div class="flex items-center gap-1 w-[231px] h-[60px]">
                 <img src="/images/logo.png" alt="Logo" class="h-[65px] w-auto">
-                <span class="text-2xl font-medium tracking-wide text-blue-500 leading-none">
+                <span class="text-2xl font-medium tracking-wide text-blue-500 leading-none justify-start pt-3">
                     Rafa Kost
                 </span>
             </div>
 
             <!-- Menu -->
-            <div class="hidden md:flex space-x-10 text-base text-gray-700">
+            <div class="hidden
+                    md:flex space-x-10 text-base text-gray-700">
                 <a href="#" class="hover:text-blue-500">Beranda</a>
                 <a href="#" class="hover:text-blue-500">Fasilitas</a>
                 <a href="#" class="hover:text-blue-500">Kamar</a>
