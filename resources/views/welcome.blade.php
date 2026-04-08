@@ -4,13 +4,13 @@
 <section class="px-6 mt-10">
     <div class="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden">
 
-        <img src="{{ asset('images/benner.png') }}" class="w-full h-[550px] object-cover">
+        <img src="{{ asset('images/benner.png') }}" class="w-full h-[660px] object-cover">
 
         <div class="absolute inset-0 bg-black/40"></div>
 
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
 
-            <h1 class="text-4xl md:text-6xl font-semibold">
+            <h1 class="text-4xl md:text-6xl font-medium">
                 Rafa Kost
             </h1>
 

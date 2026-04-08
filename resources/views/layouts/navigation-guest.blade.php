@@ -1,5 +1,5 @@
 <nav class="bg-white border-b">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-10 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
 
             <!-- Logo -->
@@ -21,10 +21,10 @@
             <!-- Auth Button -->
             <div class="flex items-center space-x-3">
                 <a href="/login"
-                    class="px-5 py-2 border border-gray-400 rounded text-base text-gray-700 hover:bg-gray-200">
+                    class="px-8 py-1 border border-gray-400 rounded text-base text-gray-700 hover:bg-gray-200">
                     Login
                 </a>
-                <a href="/register" class="px-5 py-2 bg-blue-500 text-white rounded text-base hover:bg-blue-600">
+                <a href="/register" class="px-8 py-1 bg-blue-500 text-white rounded text-base hover:bg-blue-600">
                     Sign Up
                 </a>
             </div>
