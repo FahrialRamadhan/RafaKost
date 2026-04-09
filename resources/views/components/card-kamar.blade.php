@@ -1,0 +1,57 @@
+@props(['kamar'])
+
+<div class="relative w-full h-[280px] rounded-2xl overflow-hidden shadow group">
+
+    <!-- IMAGE -->
+    <img src="{{ asset($kamar->image) }}"
+        class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+
+    <!-- TOP BADGE -->
+    <div class="absolute top-2 left-2 right-2 flex justify-between items-center text-xs">
+
+        <!-- TIPE -->
+        <span class="flex items-center gap-1 bg-white/90 px-2 py-1 rounded-md text-gray-700 text-[11px]">
+
+    <!-- ICON LOGO -->
+    <img src="{{ asset('images/logokamar.png') }}" class="w-3 h-3 object-contain">
+
+    <!-- TEXT -->
+    {{ $kamar->tipe ?? 'Km. mandi luar' }}
+
+</span>
+
+        <!-- STATUS -->
+        <span class="flex items-center gap-1 px-2 py-1 rounded-md text-black text-[11px]
+    {{ $kamar->status == 'terisi' ? 'bg-red-300' : 'bg-blue-400' }}">
+
+    <img src="{{ asset('images/logokamar.png') }}" class="w-3 h-3 object-contain">
+
+    {{ ucfirst($kamar->status) }}
+
+</span>
+
+    </div>
+
+    <!-- WATERMARK / TEXT TENGAH -->
+    <div class="absolute inset-0 flex items-center justify-center">
+        <p class="text-white/70 font-semibold text-sm">
+            RafaKost Property
+        </p>
+    </div>
+
+    <!-- BOTTOM INFO -->
+    <div class="absolute bottom-3 left-3 right-3 bg-white rounded-xl p-3 shadow">
+
+        <p class="font-semibold text-sm">{{ $kamar->nama }}</p>
+
+        <p class="text-xs text-gray-500 flex items-center gap-1">
+            📍 {{ $kamar->lantai }}
+        </p>
+
+        <div class="mt-2 bg-gray-100 text-xs px-2 py-1 rounded-md text-gray-700">
+            {{ $kamar->harga }}
+        </div>
+
+    </div>
+
+</div>

@@ -1,3 +1,4 @@
+
 <x-guest-layout>
     <x-slot name="title">Home - Rafa Kost</x-slot>
     @include('layouts.navigation-guest')
@@ -58,33 +59,33 @@
                 </p>
 
                 <!-- Images -->
-                <div class="flex gap-4 mt-6">
+                <div class="flex gap-4 mt-5">
 
-                    <img src="{{ asset('images/koridorkamarkiri.png') }}" class="w-1/2 h-40 object-cover rounded-lg">
+                    <img src="{{ asset('images/koridorkamarkiri.png') }}" class="w-1/3 h-4.01 object-cover rounded-lg">
 
-                    <img src="{{ asset('images/koridorkamarkanan.png') }}" class="w-1/2 h-40 object-cover rounded-lg">
+                    <img src="{{ asset('images/koridorkamarkanan.png') }}" class="w-1/3 h-4.01 object-cover rounded-lg">
 
                 </div>
 
             </div>
 
             <!-- RIGHT CONTENT -->
-            <div class="relative w-full opacity-60">
+           <div class="relative w-full opacity-60 mt-20">
 
-                <!-- ICON (pojok kanan section, bukan text) -->
-                <img src="{{ asset('images/bintangpartikel.png') }}"
-                    class="absolute top-[-20px] right-0 w-6 h-6 opacity-70">
+    <!-- ICON -->
+    <img src="{{ asset('images/bintangpartikel.png') }}"
+        class="absolute top-[-20px] right-0 w-5 h-5 opacity-60">
 
-                <!-- TEXT -->
-                <div class="text-gray-600 leading-relaxed text-sm md:text-base max-w-xl justify-start p-50">
-                    <p>
-                        <span class="text-blue-500 font-medium">Rafa Kost</span> hadir dengan fasilitas lengkap,
-                        lingkungan aman, dan lokasi strategis untuk hunian nyaman tanpa ribet—
-                        cocok untuk mahasiswa maupun pekerja.
-                    </p>
-                </div>
+    <!-- TEXT -->
+    <div class="text-gray-600 leading-relaxed text-sm md:text-base max-w-xl">
+        <p>
+            <span class="text-blue-500 font-medium">Rafa Kost</span> hadir dengan fasilitas lengkap,
+            lingkungan aman, dan lokasi strategis untuk hunian nyaman tanpa ribet—
+            cocok untuk mahasiswa maupun pekerja.
+        </p>
+    </div>
 
-            </div>
+</div>
 
         </div>
 
@@ -96,7 +97,7 @@
         <div class="mb-10">
 
             <div class="flex items-center gap-2 text-gray-500 text-sm mb-2">
-                <img src="{{ asset('images/star.png') }}" class="w-4 h-4">
+                <img src="{{ asset('images/frameworkpartikel.png') }}" class="w-4 h-4">
                 <span>FASILITAS</span>
             </div>
 
@@ -111,66 +112,132 @@
         </div>
 
         <!-- Card Grid -->
-        <div class="grid md:grid-cols-5 gap-5">
+        <div class="relative">
+    <!-- SLIDER -->
+    <div id="slider"
+     class="flex gap-5 overflow-x-auto scroll-smooth no-scrollbar px-2">
+   
+        <x-card-fasilitas image="{{ asset('images/listrik.jpg') }}" title="Bebas Listrik" />
+        <x-card-fasilitas image="{{ asset('images/air.jpg') }}" title="Air" />
+        <x-card-fasilitas image="{{ asset('images/parkir.jpg') }}" title="Parkiran" />
+        <x-card-fasilitas image="{{ asset('images/listrik.jpg') }}" title="Bebas Listrik" />
+        <x-card-fasilitas image="{{ asset('images/air.jpg') }}" title="Air" />
+        <x-card-fasilitas image="{{ asset('images/parkir.jpg') }}" title="Parkiran" />
+        <x-card-fasilitas image="{{ asset('images/parkir.jpg') }}" title="Parkiran" />
 
-            <!-- Card -->
-            <div class="relative rounded-xl overflow-hidden group">
-                <img src="{{ asset('images/listrik.jpg') }}" class="w-full h-40 object-cover">
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+    </div>
 
-                <div class="absolute bottom-3 left-3 text-white">
-                    <p class="font-semibold">Bebas Listrik</p>
-                    <span class="text-xs opacity-80">(Termasuk)</span>
-                </div>
+</div>
+
+<div class="flex items-center justify-center gap-6 mt-8">
+
+    <!-- LEFT BUTTON -->
+    <button onclick="scrollLeftFunc()"
+        class="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow hover:bg-gray-100 transition">
+        &#8592;
+    </button>
+
+    <!-- TEXT -->
+    <span class="text-gray-700 font-medium">
+        Lihat semua fasilitas
+    </span>
+
+    <!-- RIGHT BUTTON -->
+    <button onclick="scrollRightFunc()"
+        class="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow hover:bg-gray-100 transition">
+        &#8594;
+    </button>
+
+</div>
+
+    <section class="max-w-6xl mx-auto px-4 mt-20">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+
+        <!-- Label -->
+        <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+            <img src="{{ asset('images/frameworkpartikel.png') }}" class="w-4 h-4">
+            <span>DAFTAR KAMAR</span>
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-2xl md:text-3xl font-semibold text-gray-800">
+            Ada {{ $kamars->count() }} Kamar di Rafa Kost
+        </h2>
+
+        <!-- Subtitle -->
+        <p class="text-gray-600 mt-2 max-w-xl text-sm md:text-base">
+            Rafa Kost menyediakan total 10 kamar dengan pembagian 7 kamar mandi dalam dan 3 kamar mandi luar, memberikan kenyamanan serta privasi bagi setiap penghuni.
+        </p>
+
+    </div>
+
+    <!-- GRID CARD -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-6">
+
+        @foreach ($kamars as $kamar)
+            <x-card-kamar :kamar="$kamar" />
+        @endforeach
+
+    </div>
+
+</section>
+
+<section class="max-w-6xl mx-auto px-4 mt-24 text-center">
+
+    <h2 class="text-2xl md:text-3xl font-semibold">
+        Apa Kata <span class="text-blue-500">#Penghuni</span>
+    </h2>
+
+    <p class="text-gray-500 mt-2 text-sm md:text-base">
+        Setiap penghuni punya cerita pengalaman mereka menemukan kost terbaik
+    </p>
+
+    <!-- SLIDER -->
+    <div class="relative mt-10">
+
+    <!-- LEFT -->
+    <button onclick="prevTesti()"
+        class="absolute left-[-10px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black text-white rounded-full">
+        ←
+    </button>
+
+    <!-- WRAPPER -->
+    <div class="overflow-hidden">
+
+        <!-- SLIDER -->
+        <div id="testiSlider" class="flex gap-6 transition-all duration-500">
+
+            <!-- ITEM -->
+            <div class="min-w-[75%] flex justify-center items-center">
+                <x-testimonial-card 
+                    text="Kosan nyaman, view bagus depan lapangan enak buat piknik"
+                    name="Khasanah Uswatun"
+                    role="Mahasiswa"
+                />
             </div>
 
-            <!-- Card -->
-            <div class="relative rounded-xl overflow-hidden group">
-                <img src="{{ asset('images/air.jpg') }}" class="w-full h-40 object-cover">
-
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
-
-                <div class="absolute bottom-3 left-3 text-white">
-                    <p class="font-semibold">Air</p>
-                    <span class="text-xs opacity-80">(Termasuk)</span>
-                </div>
-            </div>
-
-            <!-- Card -->
-            <div class="relative rounded-xl overflow-hidden group">
-                <img src="{{ asset('images/parkir.jpg') }}" class="w-full h-40 object-cover">
-
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
-
-                <div class="absolute bottom-3 left-3 text-white">
-                    <p class="font-semibold">Parkiran</p>
-                </div>
-            </div>
-
-            <!-- Card -->
-            <div class="relative rounded-xl overflow-hidden group">
-                <img src="{{ asset('images/dapur.jpg') }}" class="w-full h-40 object-cover">
-
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
-
-                <div class="absolute bottom-3 left-3 text-white">
-                    <p class="font-semibold">Dapur Bersama</p>
-                </div>
-            </div>
-
-            <!-- Card -->
-            <div class="relative rounded-xl overflow-hidden group">
-                <img src="{{ asset('images/lokasi.jpg') }}" class="w-full h-40 object-cover">
-
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
-
-                <div class="absolute bottom-3 left-3 text-white">
-                    <p class="font-semibold">Lokasi Strategis</p>
-                </div>
+            <div class="min-w-[75%] flex justify-center items-center">
+                <x-testimonial-card 
+                    text="Tempat strategis, dekat kampus dan fasilitas lengkap"
+                    name="Andi Saputra"
+                    role="Mahasiswa"
+                />
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+    <!-- RIGHT -->
+    <button onclick="nextTesti()"
+        class="absolute right-[-10px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black text-white rounded-full">
+        →
+    </button>
+
+</div>
+
+</section>
 </x-guest-layout>
