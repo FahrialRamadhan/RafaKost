@@ -1,47 +1,111 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="min-h-screen flex items-center justify-center bg-gray-100 px-6">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        <div class="flex items-stretch gap-12 max-w-6xl w-full">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <!-- LEFT (CARD IMAGE) -->
+            <div class="hidden md:flex w-1/2">
+            <div class="w-full h-full min-h-[700px] rounded-[24px] shadow-xl overflow-hidden relative">
+
+        <!-- image -->
+        <img src="/images/lorong.png" 
+            class="absolute inset-0 w-full h-full object-cover">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-white/50 via-black/50 to-transparent"></div>
+
+        <!-- content -->
+        <div class="relative z-10 p-6 flex flex-col justify-between h-full">
+            
+            <!-- logo -->
+            <img src="/images/secondlogo.png" class="w-10 h-auto">
+
+            <!-- text -->
+            <h2 class="text-white text-3xl font-semibold leading-snug text-start p-5">
+                Tempat Tinggal Nyaman, Serasa di Rumah.
+            </h2>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    </div>
+</div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <!-- RIGHT (FORM - NO CARD) -->
+           <div class="w-full md:w-1/2 flex items-center">
+    
+    <div class="w-full max-w-md">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <!-- HEADER -->
+        <div class="mb-5">
+
+    <!-- logo -->
+    <img src="/images/logo.png" class="w-[40px] h-auto mb-3">
+
+    <!-- title -->
+    <h1 class="text-2xl font-bold text-gray-900">
+        Login Account
+    </h1>
+
+    <!-- desc -->
+    <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+        Temukan kenyamanan tinggal setiap hari dengan fasilitas lengkap
+        dan lingkungan yang mendukung.
+    </p>
+
+</div>
+
+        <!-- FORM -->
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <!-- EMAIL -->
+            <div>
+                <label class="text-sm text-gray-600">Your email</label>
+                <input type="email" name="email"
+                    class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="mt-3">
+                <label class="text-sm text-gray-600">Password</label>
+                <input type="password" name="password"
+                    class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+
+            <!-- BUTTON -->
+            <button class="w-full mt-5 bg-blue-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-600 transition">
+                Sign In
+            </button>
+
+            <!-- DIVIDER -->
+            <div class="flex items-center my-5">
+                <div class="flex-1 h-px bg-gray-200"></div>
+                <span class="px-3 text-xs text-gray-400">Or continue with</span>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
+            <!-- SOCIAL -->
+            <div class="flex gap-3">
+                <button type="button" class="flex-1 border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-50">
+                    Google
+                </button>
+                <button type="button" class="flex-1 border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-50">
+                    Github
+                </button>
+                <button type="button" class="flex-1 border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-50">
+                    Facebook
+                </button>
+            </div>
+
+            <!-- FOOTER -->
+            <p class="text-xs text-center text-gray-500 mt-5">
+                Don’t have an account?
+                <a href="{{ route('register') }}" class="text-blue-500 font-medium">Sign Up</a>
+            </p>
+
+        </form>
+
+    </div>
+</div>
+
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </x-guest-layout>

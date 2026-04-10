@@ -2,10 +2,10 @@
 <x-guest-layout>
     <x-slot name="title">Home - Rafa Kost</x-slot>
     @include('layouts.navigation-guest')
-
+<div  id="beranda"class="pt-20">
     <section class="px-6 mt-10">
         <div class="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden">
-            <img src="{{ asset('images/benner.png') }}" class="w-full h-[550px] object-cover">
+            <img src="{{ asset('images/benner.png') }}" class="w-full h-[720px] object-cover">
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="absolute inset-0 flex flex-col items-center justify-start text-center text-white px-4 pt-28">
                 <!-- Title -->
@@ -20,15 +20,31 @@
                     Nyaman, Aman, Terjangkau
                 </p>
 
-                <!-- Search -->
-                <div class="mt-6 flex items-center bg-white rounded-full overflow-hidden shadow-lg w-full max-w-xl">
-                    <input type="text" placeholder="Tulis tipe kamar atau nomor kamar"
-                        class="flex-1 px-5 py-3 text-gray-700 outline-none">
-                    <button class="bg-blue-500 text-white px-6 py-3 hover:bg-blue-600">
-                        Cari
-                    </button>
+                <div class="mt-5 flex items-center bg-white rounded-full shadow-lg w-full max-w-xl p-2">
+            <!-- ICON -->
+    <div class="pl-3 text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="h-5 w-5" 
+             fill="none" 
+             viewBox="0 0 24 24" 
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+    </div>
+    
+  <input 
+        type="text" 
+        placeholder="Tulis tipe kamar atau nomor kamar"
+        class="flex-1 px-3 py-3 text-gray-700 outline-none border-none focus:ring-0 bg-transparent"
+    >
 
-                </div>
+    <button 
+        class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition">
+        Cari
+    </button>
+
+</div>
             </div>
         </div>
     </section>
@@ -94,14 +110,14 @@
     <section class="max-w-6xl mx-auto px-6 mt-20">
 
         <!-- Header -->
-        <div class="mb-10">
+        <div id="fasilitas" class="relative z-10 bg-white py-1 scroll-mt-24">
 
             <div class="flex items-center gap-2 text-gray-500 text-sm mb-2">
                 <img src="{{ asset('images/frameworkpartikel.png') }}" class="w-4 h-4">
                 <span>FASILITAS</span>
             </div>
 
-            <h2 class="text-3xl md:text-4xl font-semibold text-gray-800">
+            <h2 class="text-3xl md:text-3xl font-semibold text-gray-800">
                 Beberapa Fasilitas Rafa Kost
             </h2>
 
@@ -119,11 +135,11 @@
    
         <x-card-fasilitas image="{{ asset('images/listrik.jpg') }}" title="Bebas Listrik" />
         <x-card-fasilitas image="{{ asset('images/air.jpg') }}" title="Air" />
-        <x-card-fasilitas image="{{ asset('images/parkir.jpg') }}" title="Parkiran" />
-        <x-card-fasilitas image="{{ asset('images/listrik.jpg') }}" title="Bebas Listrik" />
-        <x-card-fasilitas image="{{ asset('images/air.jpg') }}" title="Air" />
-        <x-card-fasilitas image="{{ asset('images/parkir.jpg') }}" title="Parkiran" />
-        <x-card-fasilitas image="{{ asset('images/parkir.jpg') }}" title="Parkiran" />
+        <x-card-fasilitas image="{{ asset('images/dapur.png') }}" title="Dapur Bersama" />
+        <x-card-fasilitas image="{{ asset('images/parkiran.png') }}" title="Parkiran" />
+        <x-card-fasilitas image="{{ asset('images/lokasistrategis.jpg') }}" title="Lokasi Strategis" />
+        <x-card-fasilitas image="{{ asset('images/wifi.jpg') }}" title="Wifi" />
+        <x-card-fasilitas image="{{ asset('images/cctv.jpg') }}" title="CCTV" />
 
 
     </div>
@@ -157,7 +173,7 @@
     <div class="mb-8">
 
         <!-- Label -->
-        <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+        <div id="kamar" class="flex items-center gap-2 text-sm text-gray-500 mb-2 py-1 scroll-mt-24">
             <img src="{{ asset('images/frameworkpartikel.png') }}" class="w-4 h-4">
             <span>DAFTAR KAMAR</span>
         </div>
@@ -198,20 +214,17 @@
     <!-- SLIDER -->
     <div class="relative mt-10">
 
-    <!-- LEFT -->
-    <button onclick="prevTesti()"
-        class="absolute left-[-10px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black text-white rounded-full">
-        ←
-    </button>
+        <!-- LEFT -->
+        <button onclick="prevTesti()"
+            class="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black text-white rounded-full z-10">
+            ←
+        </button>
 
-    <!-- WRAPPER -->
+        <!-- SLIDE -->
     <div class="overflow-hidden">
-
-        <!-- SLIDER -->
         <div id="testiSlider" class="flex gap-6 transition-all duration-500">
 
-            <!-- ITEM -->
-            <div class="min-w-[75%] flex justify-center items-center">
+            <div class="min-w-full flex justify-center">
                 <x-testimonial-card 
                     text="Kosan nyaman, view bagus depan lapangan enak buat piknik"
                     name="Khasanah Uswatun"
@@ -219,7 +232,23 @@
                 />
             </div>
 
-            <div class="min-w-[75%] flex justify-center items-center">
+            <div class="min-w-full flex justify-center">
+                <x-testimonial-card 
+                    text="Tempat strategis, dekat kampus dan fasilitas lengkap"
+                    name="Andi Saputra"
+                    role="Mahasiswa"
+                />
+            </div>
+
+            <div class="min-w-full flex justify-center">
+                <x-testimonial-card 
+                    text="Tempat strategis, dekat kampus dan fasilitas lengkap"
+                    name="Andi Saputra"
+                    role="Mahasiswa"
+                />
+            </div>
+
+            <div class="min-w-full flex justify-center">
                 <x-testimonial-card 
                     text="Tempat strategis, dekat kampus dan fasilitas lengkap"
                     name="Andi Saputra"
@@ -228,16 +257,16 @@
             </div>
 
         </div>
-
     </div>
 
-    <!-- RIGHT -->
-    <button onclick="nextTesti()"
-        class="absolute right-[-10px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-black text-white rounded-full">
-        →
-    </button>
-
-</div>
+        <!-- RIGHT -->
+        <button onclick="nextTesti()"
+            class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black text-white rounded-full z-10">
+            →
+        </button>
+        
+    </div>
 
 </section>
+@include('layouts.footer')
 </x-guest-layout>

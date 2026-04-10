@@ -1,6 +1,6 @@
 @props(['text', 'name', 'role'])
 
-<div class="bg-gray-100 rounded-2xl p-10 w-full text-left">
+<div class="bg-gray-100 rounded-2xl p-10 w-full max-w-4xl md:max-w-1xl text-left mx-auto">
 
     <!-- QUOTE -->
     <p class="text-3xl mb-4">“</p>
