@@ -1,64 +1,161 @@
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Profile Information') }}
-        </h2>
+<section class="space-y-6">
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's profile information and email address.") }}
-        </p>
-    </header>
+    {{-- FOTO --}}
+  <div class="flex items-center border-b pb-6">
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
+    {{-- TEXT --}}
+    <div class="w-2/3">
+        <p class="font-semibold text-gray-700">Foto Kamu</p>
+        <p class="text-sm text-gray-500">Foto ini akan ditampilkan sebagai profil kamu</p>
+    </div>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    {{-- FOTO --}}
+    <div class="w-1/3 flex justify-right mr-40">
+        <div class="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center">
+            👤
+        </div>
+    </div>
+
+</div>
+
+    <form method="post" action="{{ route('profile.update') }}" class="space-y-5">
         @csrf
         @method('patch')
 
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        {{-- NAMA --}}
+        <div class="grid grid-cols-3 items-center gap-4">
+    <label class="text-sm font-medium text-gray-700">Nama Lengkap</label>
+
+    <div class="col-span-2 relative">
+
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class="w-5 h-5" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M5.121 17.804A9 9 0 1118.879 17.8M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </span>
+
+        <input type="text" name="name"
+            value="{{ old('name', $user->name) }}"
+            class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+
+    </div>
+</div>
+
+        {{-- EMAIL --}}
+        <div class="grid grid-cols-3 items-center gap-4">
+    <label class="text-sm font-medium text-gray-700">Alamat Email</label>
+
+    <div class="col-span-2 relative">
+
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M3 8l9 6 9-6M4 6h16v12H4z" />
+            </svg>
+        </span>
+
+        <input type="email" name="email"
+            value="{{ old('email', $user->email) }}"
+            class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+
+    </div>
+</div>
+
+        {{-- TELEPON --}}
+        <div class="grid grid-cols-3 items-center gap-4">
+    <label class="text-sm font-medium text-gray-700">Nomor Telepon</label>
+
+    <div class="col-span-2 relative">
+
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M3 5a2 2 0 012-2h2.28a2 2 0 011.94 1.515l.516 2.064a2 2 0 01-.45 1.847l-1.27 1.27a16 16 0 006.586 6.586l1.27-1.27a2 2 0 011.847-.45l2.064.516A2 2 0 0121 16.72V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+        </span>
+
+        <input type="text" name="phone"
+            class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+
+    </div>
+</div>
+        {{-- GENDER --}}
+       <div class="grid grid-cols-3 items-center gap-4">
+    <label class="text-sm font-medium text-gray-700">Jenis Kelamin</label>
+
+    <div class="col-span-2 relative">
+
+        {{-- ICON --}}
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M17 7h-6a4 4 0 100 8h6M13 7v10" />
+            </svg>
+        </span>
+
+        {{-- SELECT --}}
+        <select name="gender"
+            class="w-full bg-gray-50 border border-gray-300 rounded-lg pl-10 pr-4 py-3 text-sm appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <option value="">Pilih</option>
+            <option value="laki-laki">Laki-laki</option>
+            <option value="perempuan">Perempuan</option>
+        </select>
+
+    </div>
+</div>
+
+        {{-- PEKERJAAN --}}
+        <div class="grid grid-cols-3 items-center gap-4">
+    <label class="text-sm font-medium text-gray-700">Pekerjaan</label>
+
+    <div class="col-span-2 relative">
+
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M6 7V6a2 2 0 012-2h8a2 2 0 012 2v1M6 7h12M6 7v11a2 2 0 002 2h8a2 2 0 002-2V7" />
+            </svg>
+        </span>
+
+        <input type="text" name="pekerjaan"
+            class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 pl-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+
+    </div>
+</div>
+
+        {{-- ACTION --}}
+        <div class="flex justify-end gap-3 pt-4">
+            <button type="button"
+                class="px-5 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100">
+                Batal
+            </button>
+
+            <button type="submit"
+                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Simpan
+            </button>
         </div>
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
-        </div>
-
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
-            @endif
-        </div>
     </form>
 </section>

@@ -90,3 +90,51 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
     });
 });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll('a[href*="#"]');
+
+    links.forEach(link => {
+        link.addEventListener("click", function (e) {
+            const targetId = this.getAttribute("href").split("#")[1];
+            const target = document.getElementById(targetId);
+
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    });
+});
+
+const btn = document.getElementById('profileBtn');
+const menu = document.getElementById('profileMenu');
+
+btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    const isOpen = menu.classList.contains('opacity-100');
+
+    if (isOpen) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
+});
+
+document.addEventListener('click', function(e) {
+    if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+        closeMenu();
+    }
+});
+
+function openMenu() {
+    menu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+    menu.classList.add('opacity-100', 'scale-100');
+}
+
+function closeMenu() {
+    menu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+    menu.classList.remove('opacity-100', 'scale-100');
+}

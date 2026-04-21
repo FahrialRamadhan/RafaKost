@@ -1,6 +1,10 @@
 
 <x-guest-layout>
+    @auth
+    @include('layouts.navigation-user')
+@else
     @include('layouts.navigation-guest')
+@endauth
     <div class="bg-white-100 min-h-screen py-10 px-6 pt-40">
 
         <div class="max-w-6xl mx-auto">

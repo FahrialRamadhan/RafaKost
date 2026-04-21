@@ -1,7 +1,7 @@
+@extends('layouts.app')
 
-<x-guest-layout>
+@section('content')
     <x-slot name="title">Home - Rafa Kost</x-slot>
-    @include('layouts.navigation-guest')
 <div  id="beranda"class="pt-20">
     <section class="px-6 mt-10">
         <div class="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden">
@@ -110,7 +110,7 @@
     <section class="max-w-6xl mx-auto px-6 mt-20">
 
         <!-- Header -->
-        <div id="fasilitas" class="relative z-10 bg-white py-1 scroll-mt-24">
+        <div id="fasilitas" class="relative z-10 bg-gray-200 py-1 scroll-mt-24">
 
             <div class="flex items-center gap-2 text-gray-500 text-sm mb-2">
                 <img src="{{ asset('images/frameworkpartikel.png') }}" class="w-4 h-4">
@@ -180,7 +180,7 @@
 
         <!-- Title -->
         <h2 class="text-2xl md:text-3xl font-semibold text-gray-800">
-            Ada {{ $kamars->count() }} Kamar di Rafa Kost
+            Ada {{ $kamars->count() }} Kamar Kosong di Rafa Kost
         </h2>
 
         <!-- Subtitle -->
@@ -269,4 +269,4 @@
 
 </section>
 @include('layouts.footer')
-</x-guest-layout>
+@endsection

@@ -4,21 +4,26 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\Admin\KamarController as AdminKamarController;
+use App\Http\Controllers\Admin\AdminProfileController;
 
 Route::get('/', [KamarController::class, 'index'])->name('home');
+Route::get('/kamar/{id}', [KamarController::class, 'show'])->name('kamar.show');
+
+Route::get('/profile', function () {
+    if (auth()->user()->role == 'admin') {
+        return view('pages.profile.admin.edit');
+    }
+    return view('pages.profile.user.edit');
+});
 
 Route::get('/maps', function () {
     return view('maps');
 })->name('maps');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        if (auth()->user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
 
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [KamarController::class, 'dashboard'])
+        ->name('dashboard');
 
     Route::get('/admin/dashboard', function () {
         if (auth()->user()->role !== 'admin') {
