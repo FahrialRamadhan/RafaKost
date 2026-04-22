@@ -483,35 +483,38 @@
     <div class="left-col">
 
         {{-- Gallery --}}
-        <div class="gallery">
-            <div class="gallery-main">
-                @if(!empty($kamar->images[0]))
-                    <img src="{{ asset('storage/' . $kamar->images[0]) }}" alt="Foto utama kamar">
-                @else
-                    <div class="gallery-placeholder">
-                        <svg width="48" height="48" fill="none" stroke="#C4C9D4" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-                    </div>
-                @endif
+        {{-- Gallery --}}
+<div class="gallery">
+    <div class="gallery-main">
+        @if(!empty($kamar->image))
+            <img src="{{ Storage::url($kamar->image) }}" alt="Foto utama kamar">
+        @else
+            <div class="gallery-placeholder">
+                <svg width="48" height="48" fill="none" stroke="#C4C9D4" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
             </div>
-            <div class="gallery-thumb">
-                @if(!empty($kamar->images[1]))
-                    <img src="{{ asset('storage/' . $kamar->images[1]) }}" alt="Foto kamar 2">
-                @else
-                    <div class="gallery-placeholder">
-                        <svg width="32" height="32" fill="none" stroke="#C4C9D4" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-                    </div>
-                @endif
+        @endif
+    </div>
+
+    <div class="gallery-thumb">
+        @if(!empty($kamar->image))
+            <img src="{{ Storage::url($kamar->image) }}" alt="Foto kamar 2">
+        @else
+            <div class="gallery-placeholder">
+                <svg width="32" height="32" fill="none" stroke="#C4C9D4" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
             </div>
-            <div class="gallery-thumb" @if(count($kamar->images ?? []) > 3) data-more="+{{ count($kamar->images) - 3 }} foto" @endif>
-                @if(!empty($kamar->images[2]))
-                    <img src="{{ asset('storage/' . $kamar->images[2]) }}" alt="Foto kamar 3">
-                @else
-                    <div class="gallery-placeholder">
-                        <svg width="32" height="32" fill="none" stroke="#C4C9D4" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-                    </div>
-                @endif
+        @endif
+    </div>
+
+    <div class="gallery-thumb">
+        @if(!empty($kamar->image))
+            <img src="{{ Storage::url($kamar->image) }}" alt="Foto kamar 3">
+        @else
+            <div class="gallery-placeholder">
+                <svg width="32" height="32" fill="none" stroke="#C4C9D4" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
             </div>
-        </div>
+        @endif
+    </div>
+</div>
 
         {{-- Room Header Card --}}
         <div class="room-header-card">
