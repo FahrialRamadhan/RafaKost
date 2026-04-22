@@ -10,11 +10,17 @@
 
                     {{-- Profile --}}
                     <div class="text-center">
-                        <div class="w-20 h-20 mx-auto bg-blue-200 rounded-full flex items-center justify-center">
-                            👤
-                        </div>
+                        @if($user->photo)
+                            <img src="{{ asset('storage/' . $user->photo) }}"
+                                class="w-20 h-20 mx-auto rounded-full object-cover">
+                        @else
+                            <div class="w-20 h-20 mx-auto bg-blue-200 rounded-full flex items-center justify-center">
+                                👤
+                            </div>
+                        @endif
+
                         <p class="mt-3 font-semibold text-gray-800">
-                            {{ auth()->user()->name }}
+                            {{ $user->name }}
                         </p>
                     </div>
 

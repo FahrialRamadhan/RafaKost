@@ -13,5 +13,8 @@ class Kamar extends Model
     'image',
     'status'
 ];
+protected $casts = [
+    'harga' => 'integer',
+];
 }
 

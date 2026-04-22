@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+    @php
+        $hunianPersen = $totalKamar > 0 ? round(($kamarTerisi / $totalKamar) * 100) : 0;
+    @endphp
+
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -228,11 +232,19 @@
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
 
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .actions-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 768px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .actions-grid { grid-template-columns: 1fr; }
             .rk-hero { padding: 28px 24px; }
             .rk-hero h1 { font-size: 30px; }
+            .dashboard-bottom {
+                grid-template-columns: 1fr !important;
+            }
         }
     </style>
 
@@ -263,26 +275,33 @@
                 <div class="stat-card">
                     <div class="stat-icon" style="background: #EFF6FF;">🏠</div>
                     <div class="stat-label">Total Kamar</div>
-                    <div class="stat-value">24</div>
+                    <div class="stat-value">{{ $totalKamar }}</div>
                     <div class="stat-sub">Semua unit terdaftar</div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-icon" style="background: #F0FDF4;">✅</div>
                     <div class="stat-label">Kamar Terisi</div>
-                    <div class="stat-value">18</div>
-                    <div class="stat-sub"><span class="stat-up">75%</span> tingkat hunian</div>
+                    <div class="stat-value">{{ $kamarTerisi }}</div>
+                    <div class="stat-sub">
+                        <span class="stat-up">{{ $hunianPersen }}%</span> tingkat hunian
+                    </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-icon" style="background: #FFF7ED;">🔑</div>
-                    <div class="stat-label">Kamar Kosong</div>
-                    <div class="stat-value">6</div>
+                    <div class="stat-label">Kamar Tersedia</div>
+                    <div class="stat-value">{{ $kamarTersedia }}</div>
                     <div class="stat-sub">Siap disewakan</div>
                 </div>
+
                 <div class="stat-card">
-                    <div class="stat-icon" style="background: #FFF1F2;">⏳</div>
-                    <div class="stat-label">Belum Bayar</div>
-                    <div class="stat-value">3</div>
-                    <div class="stat-sub"><span class="stat-down">Perlu tindakan</span></div>
+                    <div class="stat-icon" style="background: #FFF1F2;">💰</div>
+                    <div class="stat-label">Total Nilai Kamar</div>
+                    <div class="stat-value" style="font-size: 28px;">
+                        Rp {{ number_format((int) $totalNilaiKamar, 0, ',', '.') }}
+                    </div>
+                    <div class="stat-sub">Akumulasi harga semua kamar</div>
                 </div>
             </div>
 
@@ -330,71 +349,63 @@
             </div>
 
             {{-- Bottom: Activity + Info --}}
-            <div style="display: grid; grid-template-columns: 1fr 340px; gap: 20px;">
+            <div class="dashboard-bottom" style="display: grid; grid-template-columns: 1fr 340px; gap: 20px;">
 
                 {{-- Recent Activity --}}
                 <div class="activity-card">
                     <div class="activity-header">
                         <h3>Aktivitas Terbaru</h3>
-                        <a href="#" style="font-size: 13px; color: var(--blue-primary); text-decoration: none; font-weight: 500;">Lihat semua →</a>
+                        <a href="{{ route('kamars.index') }}" style="font-size: 13px; color: var(--blue-primary); text-decoration: none; font-weight: 500;">Lihat semua →</a>
                     </div>
-                    <div class="activity-item">
-                        <div class="activity-dot" style="background: #2563EB;"></div>
-                        <div class="activity-content">
-                            <div class="activity-title">Kamar A-03 — Penyewa baru masuk</div>
-                            <div class="activity-time">Hari ini, 09:14</div>
+
+                    @forelse($kamarsTerbaru as $kamar)
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: {{ $kamar->status == 'terisi' ? '#16a34a' : '#f59e0b' }};"></div>
+                            <div class="activity-content">
+                                <div class="activity-title">{{ $kamar->nama }} — Lantai {{ $kamar->lantai }}</div>
+                                <div class="activity-time">
+                                    Harga Rp {{ number_format((int) $kamar->harga, 0, ',', '.') }} · {{ $kamar->created_at->diffForHumans() }}
+                                </div>
+                            </div>
+                            <span class="activity-status"
+                                style="background: {{ $kamar->status == 'terisi' ? '#F0FDF4' : '#FFFBEB' }};
+                                       color: {{ $kamar->status == 'terisi' ? '#16a34a' : '#d97706' }};">
+                                {{ ucfirst($kamar->status) }}
+                            </span>
                         </div>
-                        <span class="activity-status" style="background: #EFF6FF; color: #2563EB;">Baru</span>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-dot" style="background: #16a34a;"></div>
-                        <div class="activity-content">
-                            <div class="activity-title">Kamar B-07 — Pembayaran diterima</div>
-                            <div class="activity-time">Kemarin, 15:30</div>
+                    @empty
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: #94a3b8;"></div>
+                            <div class="activity-content">
+                                <div class="activity-title">Belum ada data kamar</div>
+                                <div class="activity-time">Silakan tambahkan data kamar terlebih dahulu</div>
+                            </div>
+                            <span class="activity-status" style="background: #F8FAFC; color: #64748b;">Kosong</span>
                         </div>
-                        <span class="activity-status" style="background: #F0FDF4; color: #16a34a;">Lunas</span>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-dot" style="background: #f59e0b;"></div>
-                        <div class="activity-content">
-                            <div class="activity-title">Kamar C-01 — Menunggu konfirmasi</div>
-                            <div class="activity-time">Kemarin, 11:00</div>
-                        </div>
-                        <span class="activity-status" style="background: #FFFBEB; color: #d97706;">Pending</span>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-dot" style="background: #dc2626;"></div>
-                        <div class="activity-content">
-                            <div class="activity-title">Kamar B-02 — Tagihan belum dibayar</div>
-                            <div class="activity-time">3 hari lalu</div>
-                        </div>
-                        <span class="activity-status" style="background: #FFF1F2; color: #dc2626;">Telat</span>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-dot" style="background: #94a3b8;"></div>
-                        <div class="activity-content">
-                            <div class="activity-title">Kamar A-11 — Penyewa keluar</div>
-                            <div class="activity-time">5 hari lalu</div>
-                        </div>
-                        <span class="activity-status" style="background: #F8FAFC; color: #64748b;">Selesai</span>
-                    </div>
+                    @endforelse
                 </div>
 
                 {{-- Info Panel --}}
                 <div style="display: flex; flex-direction: column; gap: 16px;">
                     <div class="info-card">
                         <div class="activity-header">
-                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--slate-dark);">Pendapatan Bulan Ini</h3>
+                            <h3 style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--slate-dark);">
+                                Ringkasan Hunian
+                            </h3>
                         </div>
                         <div style="padding: 20px 24px;">
                             <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 38px; font-weight: 800; color: var(--slate-dark); line-height: 1;">
-                                Rp 27,6<span style="font-size: 22px; color: var(--slate-light);">jt</span>
+                                {{ $hunianPersen }}<span style="font-size: 22px; color: var(--slate-light);">%</span>
                             </div>
-                            <div style="font-size: 13px; color: #16a34a; font-weight: 600; margin-top: 6px;">↑ 12% dari bulan lalu</div>
+                            <div style="font-size: 13px; color: #16a34a; font-weight: 600; margin-top: 6px;">
+                                Tingkat hunian kamar saat ini
+                            </div>
                             <div style="margin-top: 16px; background: #f1f5f9; border-radius: 8px; overflow: hidden; height: 8px;">
-                                <div style="width: 75%; height: 100%; background: linear-gradient(90deg, #2563EB, #3B82F6); border-radius: 8px;"></div>
+                                <div style="width: {{ $hunianPersen }}%; height: 100%; background: linear-gradient(90deg, #2563EB, #3B82F6); border-radius: 8px;"></div>
                             </div>
-                            <div style="font-size: 12px; color: var(--slate-light); margin-top: 6px;">18 dari 24 kamar sudah bayar</div>
+                            <div style="font-size: 12px; color: var(--slate-light); margin-top: 6px;">
+                                {{ $kamarTerisi }} dari {{ $totalKamar }} kamar sudah terisi
+                            </div>
                         </div>
                     </div>
 

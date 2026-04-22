@@ -2,13 +2,16 @@
 
 <a href="{{ route('kamar.show', $kamar->id) }}" class="block transition duration-300">
 
-    <div class="relative w-full h-[280px] rounded-2xl overflow-hidden shadow 
+    <div class="relative w-full h-[280px] rounded-2xl overflow-hidden shadow
                 transition duration-300 ease-in-out
                 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.03]">
 
         <!-- IMAGE -->
-        <img src="{{ asset($kamar->image) }}"
-            class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+        <img
+            src="{{ $kamar->image ? Storage::url($kamar->image) : asset('images/default-room.png') }}"
+            alt="{{ $kamar->nama }}"
+            class="w-full h-full object-cover"
+        />
 
         <!-- TOP BADGE -->
         <div class="absolute top-2 left-2 right-2 flex justify-between items-center text-xs">

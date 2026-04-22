@@ -25,23 +25,23 @@
                 <div class="mt-5 flex items-center bg-white rounded-full shadow-lg w-full max-w-xl p-2">
             <!-- ICON -->
     <div class="pl-3 text-gray-400">
-        <svg xmlns="http://www.w3.org/2000/svg" 
-             class="h-5 w-5" 
-             fill="none" 
-             viewBox="0 0 24 24" 
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="h-5 w-5"
+             fill="none"
+             viewBox="0 0 24 24"
              stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
     </div>
-    
-  <input 
-        type="text" 
+
+  <input
+        type="text"
         placeholder="Tulis tipe kamar atau nomor kamar"
         class="flex-1 px-3 py-3 text-gray-700 outline-none border-none focus:ring-0 bg-transparent"
     >
 
-    <button 
+    <button
         class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition">
         Cari
     </button>
@@ -134,7 +134,7 @@
     <!-- SLIDER -->
     <div id="slider"
      class="flex gap-5 overflow-x-auto scroll-smooth no-scrollbar px-2">
-   
+
         <x-card-fasilitas image="{{ asset('images/listrik.jpg') }}" title="Bebas Listrik" />
         <x-card-fasilitas image="{{ asset('images/air.jpg') }}" title="Air" />
         <x-card-fasilitas image="{{ asset('images/dapur.png') }}" title="Dapur Bersama" />
@@ -227,7 +227,7 @@
         <div id="testiSlider" class="flex gap-6 transition-all duration-500">
 
             <div class="min-w-full flex justify-center">
-                <x-testimonial-card 
+                <x-testimonial-card
                     text="Kosan nyaman, view bagus depan lapangan enak buat piknik"
                     name="Khasanah Uswatun"
                     role="Mahasiswa"
@@ -235,7 +235,7 @@
             </div>
 
             <div class="min-w-full flex justify-center">
-                <x-testimonial-card 
+                <x-testimonial-card
                     text="Tempat strategis, dekat kampus dan fasilitas lengkap"
                     name="Andi Saputra"
                     role="Mahasiswa"
@@ -243,7 +243,7 @@
             </div>
 
             <div class="min-w-full flex justify-center">
-                <x-testimonial-card 
+                <x-testimonial-card
                     text="Tempat strategis, dekat kampus dan fasilitas lengkap"
                     name="Andi Saputra"
                     role="Mahasiswa"
@@ -251,7 +251,7 @@
             </div>
 
             <div class="min-w-full flex justify-center">
-                <x-testimonial-card 
+                <x-testimonial-card
                     text="Tempat strategis, dekat kampus dan fasilitas lengkap"
                     name="Andi Saputra"
                     role="Mahasiswa"
@@ -266,7 +266,7 @@
             class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black text-white rounded-full z-10">
             →
         </button>
-        
+
     </div>
 
 </section>

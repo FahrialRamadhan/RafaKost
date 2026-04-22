@@ -8,14 +8,14 @@
             <div class="w-full h-full min-h-[700px] rounded-[24px] shadow-xl overflow-hidden relative">
 
         <!-- image -->
-        <img src="/images/lorong.png" 
+        <img src="/images/lorong.png"
             class="absolute inset-0 w-full h-full object-cover">
 
         <div class="absolute inset-0 bg-gradient-to-t from-white/50 via-black/50 to-transparent"></div>
 
         <!-- content -->
         <div class="relative z-10 p-6 flex flex-col justify-between h-full">
-            
+
             <!-- logo -->
             <img src="/images/secondlogo.png" class="w-10 h-auto">
 
@@ -30,7 +30,7 @@
 
             <!-- RIGHT (FORM - NO CARD) -->
            <div class="w-full md:w-1/2 flex items-center">
-    
+
     <div class="w-full max-w-md">
 
         <!-- HEADER -->
@@ -59,7 +59,7 @@
             <!-- EMAIL -->
             <div>
                 <label class="text-sm text-gray-600">Your email</label>
-                <input type="email" name="email"
+                <input type="email" name="email" value="{{ old('email') }}"
                     class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
 
@@ -68,6 +68,9 @@
                 <label class="text-sm text-gray-600">Password</label>
                 <input type="password" name="password"
                     class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                @error('email')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- BUTTON -->
