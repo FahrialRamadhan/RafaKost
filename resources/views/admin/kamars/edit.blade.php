@@ -3,182 +3,239 @@
 @section('main_class', 'pt-0')
 
 @section('content')
-    <div class="min-h-screen" style="background: #f0f4f8;">
+    {{-- Google Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        {{-- Top accent bar --}}
-        <div style="height: 3px; background: linear-gradient(90deg, #1a7fe8, #2563eb, #1a7fe8);"></div>
+    <style>
+        html, body {
+            background-color: #ffffff !important;
+            font-family: 'DM Sans', sans-serif;
+        }
 
-        <div class="max-w-2xl mx-auto py-10 px-6">
+        .page-wrapper {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* Container disamakan persis dengan Dashboard (1140px) */
+        .content-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Teks Label */
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        /* Input Field */
+        .form-input {
+            width: 100%;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 13px;
+            color: #1E293B;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+            background-color: #ffffff;
+        }
+
+        .form-input::placeholder { color: #94A3B8; }
+        .form-input:focus { border-color: #0EA5E9; }
+
+        /* Status Radio Card */
+        .status-card {
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: #ffffff;
+        }
+
+        .status-card.active { border-color: #0EA5E9; }
+
+        .radio-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1.5px solid #CBD5E1;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .status-card.active .radio-circle { border-color: #0EA5E9; }
+        .status-card.active .radio-circle::after {
+            content: ''; position: absolute;
+            top: 3px; left: 3px; right: 3px; bottom: 3px;
+            background-color: #0EA5E9; border-radius: 50%;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 1.5px dashed #CBD5E1;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            background-color: #ffffff;
+        }
+
+        .upload-area:hover { border-color: #0EA5E9; }
+
+        /* Buttons */
+        .btn-cancel {
+            background-color: #F8FAFC; color: #475569; border: none; padding: 12px 32px;
+            border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none;
+            cursor: pointer; transition: background-color 0.2s;
+        }
+        .btn-cancel:hover { background-color: #F1F5F9; }
+
+        .btn-save {
+            background-color: #0EA5E9; color: #ffffff; border: none; padding: 12px 32px;
+            border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-save:hover { opacity: 0.85; }
+    </style>
+
+    <div class="page-wrapper">
+        <div class="content-container">
 
             {{-- Back link --}}
-            <a href="{{ route('kamars.index') }}"
-               style="color: #1a7fe8; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px; letter-spacing: 0.03em;"
-               onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">
-                ← Kembali ke Data Kamar
+            <a href="{{ route('kamars.index') }}" 
+               style="color: #000000; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                Kembali
             </a>
 
-            {{-- Card --}}
-            <div style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.10);">
+            {{-- Header Title --}}
+            <div style="margin-bottom: 32px; display: flex; gap: 10px; align-items: flex-start;">
+                <img src="{{ asset('images/frameworkpartikel.png') }}" alt="icon" style="width: 22px; height: 22px; object-fit: contain; margin-top: 2px;">
+                <div>
+                    <h1 style="font-size: 16px; font-weight: 700; color: #000000; margin: 0 0 4px 0;">Edit Kamar</h1>
+                    <p style="font-size: 11px; color: #94A3B8; margin: 0;">Mengubah data — <span style="font-weight: 700; color: #0EA5E9;">{{ $kamar->nama }}</span></p>
+                </div>
+            </div>
 
-                {{-- Card Header --}}
-                <div style="background: linear-gradient(135deg, #1a7fe8 0%, #1652a8 100%); padding: 28px 32px;">
-                    <div style="display: flex; align-items: center; gap: 14px;">
-                        <div style="width: 44px; height: 44px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                            <svg width="22" height="22" fill="none" stroke="white" stroke-width="1.8" viewBox="0 0 24 24">
-                                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 style="color: #ffffff; font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -0.02em;">Edit Kamar</h1>
-                            <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin: 3px 0 0;">
-                                Mengubah data — <span style="font-weight: 600; color: white;">{{ $kamar->nama }}</span>
-                            </p>
-                        </div>
+            {{-- Form Body --}}
+            <form action="{{ route('kamars.update', $kamar->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                {{-- Row: Nama & Lantai --}}
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                    <div>
+                        <label class="form-label">Nama Kamar</label>
+                        <input type="text" name="nama" class="form-input" placeholder="Cth.Kamar A1" value="{{ old('nama', $kamar->nama) }}">
+                        @error('nama')
+                            <p style="color: #e53e3e; font-size: 11px; margin-top: 6px;">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="form-label">Lantai</label>
+                        <input type="text" name="lantai" class="form-input" placeholder="Cth.Lantai 1" value="{{ old('lantai', $kamar->lantai) }}">
+                        @error('lantai')
+                            <p style="color: #e53e3e; font-size: 11px; margin-top: 6px;">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
-                {{-- Form Body --}}
-                <form action="{{ route('kamars.update', $kamar->id) }}" method="POST" enctype="multipart/form-data" style="padding: 32px;">
-                    @csrf
-                    @method('PUT')
-
-                    {{-- Row: Nama & Lantai --}}
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-
-                        <div>
-                            <label style="display: block; color: #4a5568; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                                Nama Kamar
-                            </label>
-                            <input type="text" name="nama"
-                                   value="{{ old('nama', $kamar->nama) }}"
-                                   style="width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e0; border-radius: 10px; padding: 12px 14px; color: #1a202c; font-size: 15px; outline: none; box-sizing: border-box; transition: border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#1a7fe8'" onblur="this.style.borderColor='#cbd5e0'">
-                            @error('nama')
-                                <p style="color: #e53e3e; font-size: 12px; margin-top: 5px;">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label style="display: block; color: #4a5568; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                                Lantai
-                            </label>
-                            <input type="text" name="lantai"
-                                   value="{{ old('lantai', $kamar->lantai) }}"
-                                   style="width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e0; border-radius: 10px; padding: 12px 14px; color: #1a202c; font-size: 15px; outline: none; box-sizing: border-box; transition: border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#1a7fe8'" onblur="this.style.borderColor='#cbd5e0'">
-                            @error('lantai')
-                                <p style="color: #e53e3e; font-size: 12px; margin-top: 5px;">{{ $message }}</p>
-                            @enderror
-                        </div>
+                {{-- Harga --}}
+                <div style="margin-bottom: 24px;">
+                    <label class="form-label">Harga</label>
+                    <div style="position: relative;">
+                        <span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #000000; font-size: 13px; font-weight: 700;">Rp</span>
+                        <input type="text" name="harga" class="form-input" placeholder="Cth 650.000-700.000" value="{{ old('harga', $kamar->harga) }}" style="padding-left: 44px;">
                     </div>
+                    @error('harga')
+                        <p style="color: #e53e3e; font-size: 11px; margin-top: 6px;">{{ $message }}</p>
+                    @enderror
+                </div>
 
-                    {{-- Harga --}}
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; color: #4a5568; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                            Harga
-                        </label>
-                        <div style="position: relative;">
-                            <span style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #1a7fe8; font-size: 14px; font-weight: 600;">Rp</span>
-                            <input type="text" name="harga"
-                                   value="{{ old('harga', $kamar->harga) }}"
-                                   style="width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e0; border-radius: 10px; padding: 12px 14px 12px 40px; color: #1a202c; font-size: 15px; outline: none; box-sizing: border-box; transition: border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#1a7fe8'" onblur="this.style.borderColor='#cbd5e0'">
-                        </div>
-                        @error('harga')
-                            <p style="color: #e53e3e; font-size: 12px; margin-top: 5px;">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Status --}}
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; color: #4a5568; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                            Status Kamar
-                        </label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <label style="cursor: pointer;">
-                                <input type="radio" name="status" value="tersedia"
-                                       {{ old('status', $kamar->status) == 'tersedia' ? 'checked' : '' }}
-                                       style="display: none;" class="status-radio">
-                                <div class="status-card" data-value="tersedia"
-                                     style="border: 1.5px solid {{ old('status', $kamar->status) == 'tersedia' ? '#1a7fe8' : '#cbd5e0' }}; background: {{ old('status', $kamar->status) == 'tersedia' ? 'rgba(26,127,232,0.07)' : '#f8fafc' }}; border-radius: 10px; padding: 14px; text-align: center; transition: all 0.2s;">
-                                    <div style="width: 10px; height: 10px; background: #38a169; border-radius: 50%; margin: 0 auto 8px;"></div>
-                                    <span style="color: #2d3748; font-size: 14px; font-weight: 600;">Tersedia</span>
-                                </div>
-                            </label>
-                            <label style="cursor: pointer;">
-                                <input type="radio" name="status" value="terisi"
-                                       {{ old('status', $kamar->status) == 'terisi' ? 'checked' : '' }}
-                                       style="display: none;" class="status-radio">
-                                <div class="status-card" data-value="terisi"
-                                     style="border: 1.5px solid {{ old('status', $kamar->status) == 'terisi' ? '#1a7fe8' : '#cbd5e0' }}; background: {{ old('status', $kamar->status) == 'terisi' ? 'rgba(26,127,232,0.07)' : '#f8fafc' }}; border-radius: 10px; padding: 14px; text-align: center; transition: all 0.2s;">
-                                    <div style="width: 10px; height: 10px; background: #e53e3e; border-radius: 50%; margin: 0 auto 8px;"></div>
-                                    <span style="color: #2d3748; font-size: 14px; font-weight: 600;">Terisi</span>
-                                </div>
-                            </label>
-                        </div>
-                        @error('status')
-                            <p style="color: #e53e3e; font-size: 12px; margin-top: 5px;">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Image Upload --}}
-                    <div style="margin-bottom: 28px;">
-                        <label style="display: block; color: #4a5568; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                            Foto Kamar
-                        </label>
-
-                        {{-- Current Image Preview --}}
-                        @if($kamar->image)
-                            <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1.5px solid #cbd5e0; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;">
-                                <img src="{{ asset('storage/' . $kamar->image) }}"
-                                     alt="Foto {{ $kamar->nama }}"
-                                     style="width: 52px; height: 52px; object-fit: cover; border-radius: 8px; border: 1px solid #cbd5e0;">
-                                <div>
-                                    <p style="color: #718096; font-size: 12px; margin: 0 0 2px;">Foto saat ini</p>
-                                    <p style="color: #2d3748; font-size: 13px; font-weight: 500; margin: 0;">{{ basename($kamar->image) }}</p>
-                                </div>
-                            </div>
-                        @endif
-
-                        <label for="image-upload" style="cursor: pointer;">
-                            <div id="upload-area"
-                                 style="background: #f8fafc; border: 1.5px dashed #cbd5e0; border-radius: 10px; padding: 24px; text-align: center; transition: all 0.2s;"
-                                 onmouseover="this.style.borderColor='#1a7fe8'" onmouseout="this.style.borderColor='#cbd5e0'">
-                                <svg width="28" height="28" fill="none" stroke="#1a7fe8" stroke-width="1.5" viewBox="0 0 24 24" style="margin: 0 auto 8px;">
-                                    <path d="M4 16l4-4 4 4 4-6 4 6M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
-                                </svg>
-                                <p id="upload-text" style="color: #718096; font-size: 14px; margin: 0;">
-                                    {{ $kamar->image ? 'Klik untuk ganti foto' : 'Klik untuk unggah foto' }}
-                                </p>
-                                <p style="color: #a0aec0; font-size: 12px; margin: 4px 0 0;">PNG, JPG, JPEG maks 2MB</p>
+                {{-- Status --}}
+                <div style="margin-bottom: 24px;">
+                    <label class="form-label">Status Kamar</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                        
+                        <label style="cursor: pointer; display: block;">
+                            <input type="radio" name="status" value="tersedia" {{ old('status', $kamar->status) == 'tersedia' ? 'checked' : '' }} style="display: none;" class="status-radio">
+                            <div class="status-card {{ old('status', $kamar->status) == 'tersedia' ? 'active' : '' }}">
+                                <div class="radio-circle"></div>
+                                <span style="color: #000000; font-size: 12px; font-weight: 700;">Tersedia</span>
                             </div>
                         </label>
-                        <input type="file" name="image" id="image-upload" accept="image/*" style="display: none;"
-                               onchange="document.getElementById('upload-text').textContent = this.files[0] ? this.files[0].name : '{{ $kamar->image ? 'Klik untuk ganti foto' : 'Klik untuk unggah foto' }}'">
-                        @error('image')
-                            <p style="color: #e53e3e; font-size: 12px; margin-top: 5px;">{{ $message }}</p>
-                        @enderror
-                    </div>
 
-                    {{-- Divider --}}
-                    <div style="height: 1px; background: #e2e8f0; margin-bottom: 24px;"></div>
+                        <label style="cursor: pointer; display: block;">
+                            <input type="radio" name="status" value="terisi" {{ old('status', $kamar->status) == 'terisi' ? 'checked' : '' }} style="display: none;" class="status-radio">
+                            <div class="status-card {{ old('status', $kamar->status) == 'terisi' ? 'active' : '' }}">
+                                <div class="radio-circle"></div>
+                                <span style="color: #000000; font-size: 12px; font-weight: 700;">Terisi</span>
+                            </div>
+                        </label>
 
-                    {{-- Actions --}}
-                    <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                        <a href="{{ route('kamars.index') }}"
-                           style="padding: 12px 24px; border-radius: 10px; border: 1.5px solid #cbd5e0; color: #718096; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s;"
-                           onmouseover="this.style.borderColor='#718096';this.style.color='#2d3748'"
-                           onmouseout="this.style.borderColor='#cbd5e0';this.style.color='#718096'">
-                            Batal
-                        </a>
-                        <button type="submit"
-                                style="padding: 12px 28px; border-radius: 10px; background: linear-gradient(135deg, #1a7fe8, #1652a8); border: none; color: #ffffff; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: 0.01em; transition: opacity 0.2s;"
-                                onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
-                            Simpan Perubahan
-                        </button>
                     </div>
-                </form>
-            </div>
+                    @error('status')
+                        <p style="color: #e53e3e; font-size: 11px; margin-top: 6px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Image Upload --}}
+                <div style="margin-bottom: 40px;">
+                    <label class="form-label">Foto Kamar</label>
+                    
+                    @if($kamar->image)
+                        <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
+                            <img src="{{ asset('storage/' . $kamar->image) }}" alt="Foto {{ $kamar->nama }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid #E2E8F0;">
+                            <div>
+                                <p style="color: #94A3B8; font-size: 11px; margin: 0 0 2px;">Foto saat ini</p>
+                                <p style="color: #1E293B; font-size: 13px; font-weight: 600; margin: 0;">{{ basename($kamar->image) }}</p>
+                            </div>
+                        </div>
+                    @endif
+
+                    <label for="image-upload" style="display: block;">
+                        <div class="upload-area">
+                            <svg width="32" height="32" fill="none" stroke="#0EA5E9" stroke-width="1.5" viewBox="0 0 24 24" style="margin: 0 auto 12px;">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            <p id="upload-text" style="color: #000000; font-size: 13px; font-weight: 700; margin: 0 0 4px;">{{ $kamar->image ? 'Klik untuk ganti foto' : 'Klik Unggah Foto' }}</p>
+                            <p style="color: #94A3B8; font-size: 11px; margin: 0;">PNG,JPG,JPEG maks 2mb</p>
+                        </div>
+                    </label>
+                    <input type="file" name="image" id="image-upload" accept="image/*" style="display: none;"
+                           onchange="document.getElementById('upload-text').textContent = this.files[0] ? this.files[0].name : '{{ $kamar->image ? 'Klik untuk ganti foto' : 'Klik Unggah Foto' }}'">
+                    @error('image')
+                        <p style="color: #e53e3e; font-size: 11px; margin-top: 6px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Actions --}}
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                    <a href="{{ route('kamars.index') }}" class="btn-cancel">Batal</a>
+                    <button type="submit" class="btn-save">Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -186,12 +243,11 @@
         document.querySelectorAll('.status-radio').forEach(radio => {
             radio.addEventListener('change', () => {
                 document.querySelectorAll('.status-card').forEach(card => {
-                    card.style.borderColor = '#cbd5e0';
-                    card.style.background = '#f8fafc';
+                    card.classList.remove('active');
                 });
-                const selected = radio.nextElementSibling;
-                selected.style.borderColor = '#1a7fe8';
-                selected.style.background = 'rgba(26,127,232,0.07)';
+                if(radio.checked) {
+                    radio.nextElementSibling.classList.add('active');
+                }
             });
         });
     </script>

@@ -3,158 +3,276 @@
 @section('main_class', 'pt-0')
 
 @section('content')
-    <div class="min-h-screen" style="background: #f5f7fa;">
+    {{-- Google Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        {{-- Top accent bar --}}
-        <div style="height: 4px; background: linear-gradient(90deg, #1a7fe8, #2563eb, #1a7fe8);"></div>
+    <style>
+        html, body {
+            background-color: #ffffff !important;
+            font-family: 'DM Sans', sans-serif;
+            margin: 0;
+        }
 
-        <div class="max-w-6xl mx-auto py-10 px-6">
+        .adm-wrapper {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 32px 20px;
+        }
 
-            {{-- Page Header --}}
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;">
-                <div>
-                    <h1 style="color: #1a202c; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0;">Data Kamar</h1>
-                    <p style="color: #718096; font-size: 14px; margin: 4px 0 0;">Kelola semua data kamar kost</p>
+        .adm-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-logo {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
+        }
+
+        .btn-add {
+            background-color: #0EA5E9;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-add:hover { opacity: 0.85; }
+
+        /* Style Table */
+        .table-container {
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.03);
+            background: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        th {
+            padding: 14px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 20px;
+            font-size: 13px;
+            color: #1E293B;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        tbody tr:hover { background-color: #F8FAFC; }
+
+        .kamar-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            text-transform: capitalize;
+        }
+        .badge-green { background: #DCFCE7; color: #16A34A; }
+        .badge-red { background: #FEE2E2; color: #DC2626; }
+
+        /* Action Buttons in Table */
+        .action-btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-sm-edit {
+            background-color: #E0F2FE;
+            color: #0284C7;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-sm-delete {
+            background-color: #FEE2E2;
+            color: #DC2626;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .table-footer {
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #475569;
+            font-weight: 500;
+            background: #ffffff;
+        }
+    </style>
+
+    <div class="adm-wrapper">
+        <div class="adm-container">
+
+            {{-- Back link --}}
+            <a href="{{ route('dashboard') }}" 
+               style="color: #000000; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                Kembali
+            </a>
+
+            {{-- Header (Title & Button) --}}
+            <div class="page-header">
+                <div class="title-wrapper">
+                    <img src="{{ asset('images/frameworkpartikel.png') }}" alt="icon" class="section-logo">
+                    <h1 class="page-title">Data Kamar</h1>
                 </div>
+                <a href="{{ route('kamars.create') }}" class="btn-add">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                    Tambah Kamar
+                </a>
             </div>
 
-            {{-- Success Alert --}}
+            {{-- Success Alert (Logika Asli) --}}
             @if(session('success'))
-                <div style="display: flex; align-items: center; gap: 10px; background: rgba(72,187,120,0.08); border: 1px solid rgba(72,187,120,0.35); border-radius: 10px; padding: 14px 18px; margin-bottom: 24px;">
-                    <svg width="18" height="18" fill="none" stroke="#38a169" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M9 12l2 2 4-4M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
-                    </svg>
-                    <span style="color: #38a169; font-size: 14px; font-weight: 500;">{{ session('success') }}</span>
+                <div style="background: #DCFCE7; color: #16A34A; padding: 12px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                    {{ session('success') }}
                 </div>
             @endif
 
-            {{-- Table Card --}}
-            <div style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid #e2e8f0;">
-
-                {{-- Table --}}
+            {{-- Table Wrapper --}}
+            <div class="table-container">
                 <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <table>
                         <thead>
-                            <tr style="background: linear-gradient(135deg, #1a7fe8 0%, #1652a8 100%);">
-                                <th style="padding: 16px 20px; text-align: left; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; width: 60px;">No</th>
-                                <th style="padding: 16px 20px; text-align: left; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Nama</th>
-                                <th style="padding: 16px 20px; text-align: left; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Lantai</th>
-                                <th style="padding: 16px 20px; text-align: left; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Harga</th>
-                                <th style="padding: 16px 20px; text-align: center; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Status</th>
-                                <th style="padding: 16px 20px; text-align: center; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Aksi</th>
+                            <tr>
+                                <th style="width: 50px;">No</th>
+                                <th>Nama</th>
+                                <th>Lantai</th>
+                                <th>Harga</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($kamars as $kamar)
-                                <tr style="border-bottom: 1px solid #f0f4f8; transition: background 0.15s;"
-                                    onmouseover="this.style.background='#f7faff'"
-                                    onmouseout="this.style.background='transparent'">
-
-                                    {{-- No --}}
-                                    <td style="padding: 16px 20px; color: #a0aec0; font-size: 14px; font-weight: 600;">
-                                        {{ $loop->iteration }}
-                                    </td>
-
-                                    {{-- Nama --}}
-                                    <td style="padding: 16px 20px;">
-                                        <div style="display: flex; align-items: center; gap: 10px;">
-                                            <div style="width: 34px; height: 34px; background: rgba(26,127,232,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                <svg width="16" height="16" fill="none" stroke="#1a7fe8" stroke-width="1.8" viewBox="0 0 24 24">
-                                                    <path d="M3 10.5V19a1 1 0 001 1h16a1 1 0 001-1v-8.5M3 10.5L12 4l9 6.5"/>
-                                                </svg>
-                                            </div>
-                                            <span style="color: #2d3748; font-size: 15px; font-weight: 600;">{{ $kamar->nama }}</span>
+                            @forelse($kamars as $kamar)
+                                <tr>
+                                    <td style="font-weight: 600;">{{ $loop->iteration }}</td>
+                                    <td>
+                                        <div class="kamar-name">
+                                            {{-- IKON KOTAK SESUAI GAMBAR TERAKHIR --}}
+                                            <svg width="18" height="18" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                <rect x="5" y="3" width="14" height="18" rx="2" ry="2"></rect>
+                                                <line x1="9" y1="11" x2="12" y2="8"></line>
+                                                <line x1="9" y1="16" x2="15" y2="10"></line>
+                                            </svg>
+                                            {{ $kamar->nama }}
                                         </div>
                                     </td>
-
-                                    {{-- Lantai --}}
-                                    <td style="padding: 16px 20px; color: #718096; font-size: 14px;">
-                                        {{ $kamar->lantai }}
+                                    <td style="color: #64748B;">{{ $kamar->lantai }}</td>
+                                    <td style="font-weight: 600;">Rp {{ is_numeric($kamar->harga) ? number_format($kamar->harga, 0, ',', '.') : $kamar->harga }}</td>
+                                    <td>
+                                        <span class="badge {{ $kamar->status == 'tersedia' ? 'badge-green' : 'badge-red' }}">
+                                            • {{ ucfirst($kamar->status) }}
+                                        </span>
                                     </td>
-
-                                    {{-- Harga --}}
-                                    <td style="padding: 16px 20px; color: #2d3748; font-size: 14px; font-weight: 500;">
-                                        Rp {{ is_numeric($kamar->harga) ? number_format($kamar->harga, 0, ',', '.') : $kamar->harga }}
-                                    </td>
-
-                                    {{-- Status --}}
-                                    <td style="padding: 16px 20px; text-align: center;">
-                                        @if($kamar->status === 'tersedia')
-                                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(56,161,105,0.08); border: 1px solid rgba(56,161,105,0.3); border-radius: 20px; color: #38a169; font-size: 12px; font-weight: 600;">
-                                                <span style="width: 6px; height: 6px; background: #38a169; border-radius: 50%;"></span>
-                                                Tersedia
-                                            </span>
-                                        @else
-                                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(229,62,62,0.08); border: 1px solid rgba(229,62,62,0.25); border-radius: 20px; color: #e53e3e; font-size: 12px; font-weight: 600;">
-                                                <span style="width: 6px; height: 6px; background: #e53e3e; border-radius: 50%;"></span>
-                                                Terisi
-                                            </span>
-                                        @endif
-                                    </td>
-
-                                    {{-- Aksi --}}
-                                    <td style="padding: 16px 20px; text-align: center;">
-                                        <div style="display: inline-flex; align-items: center; gap: 8px;">
-                                            <a href="{{ route('kamars.edit', $kamar->id) }}"
-                                               style="display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; background: rgba(26,127,232,0.08); border: 1px solid rgba(26,127,232,0.25); border-radius: 8px; color: #1a7fe8; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s;"
-                                               onmouseover="this.style.background='rgba(26,127,232,0.16)'" onmouseout="this.style.background='rgba(26,127,232,0.08)'">
-                                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                                </svg>
-                                                Edit
+                                    <td>
+                                        <div class="action-btns">
+                                            <a href="{{ route('kamars.edit', $kamar->id) }}" class="btn-sm-edit">
+                                                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit
                                             </a>
-
-                                            <form action="{{ route('kamars.destroy', $kamar->id) }}" method="POST" style="display: inline;">
+                                            <form action="{{ route('kamars.destroy', $kamar->id) }}" method="POST" style="margin: 0;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                        onclick="return confirm('Yakin ingin menghapus kamar ini?')"
-                                                        style="display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; background: rgba(229,62,62,0.08); border: 1px solid rgba(229,62,62,0.25); border-radius: 8px; color: #e53e3e; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
-                                                        onmouseover="this.style.background='rgba(229,62,62,0.16)'" onmouseout="this.style.background='rgba(229,62,62,0.08)'">
-                                                    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                                        <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>
-                                                    </svg>
-                                                    Hapus
+                                                <button type="submit" class="btn-sm-delete" onclick="return confirm('Yakin ingin menghapus kamar ini?')">
+                                                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg> Hapus
                                                 </button>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
-
-                            {{-- Empty State --}}
-                            @if($kamars->isEmpty())
+                            @empty
                                 <tr>
-                                    <td colspan="6" style="padding: 60px 20px; text-align: center;">
-                                        <svg width="48" height="48" fill="none" stroke="#cbd5e0" stroke-width="1.5" viewBox="0 0 24 24" style="margin: 0 auto 14px;">
-                                            <path d="M3 10.5V19a1 1 0 001 1h16a1 1 0 001-1v-8.5M3 10.5L12 4l9 6.5M3 10.5h18"/>
-                                        </svg>
-                                        <p style="color: #4a5568; font-size: 15px; font-weight: 600; margin: 0;">Belum ada data kamar</p>
-                                        <p style="color: #a0aec0; font-size: 13px; margin: 6px 0 0;">Klik tombol "Tambah Kamar" untuk memulai</p>
+                                    <td colspan="6" style="text-align: center; padding: 40px; color: #94A3B8;">
+                                        Belum ada data kamar yang didaftarkan.
                                     </td>
                                 </tr>
-                            @endif
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
 
-                {{-- Table Footer --}}
-                <div style="padding: 14px 20px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
-                    <span style="color: #718096; font-size: 13px;">
-                        Total: <strong style="color: #2d3748;">{{ $kamars->count() }} kamar</strong>
-                    </span>
+                {{-- Table Footer (Total Kamar) --}}
+                <div class="table-footer">
+                    <div>Total: <span style="font-weight: 700; color: #1E293B;">{{ $kamars->count() }} kamar</span></div>
                     <div style="display: flex; gap: 16px;">
-                        <span style="display: inline-flex; align-items: center; gap: 5px; color: #718096; font-size: 12px;">
-                            <span style="width: 6px; height: 6px; background: #38a169; border-radius: 50%;"></span>
-                            Tersedia: {{ $kamars->where('status','tersedia')->count() }}
-                        </span>
-                        <span style="display: inline-flex; align-items: center; gap: 5px; color: #718096; font-size: 12px;">
-                            <span style="width: 6px; height: 6px; background: #e53e3e; border-radius: 50%;"></span>
-                            Terisi: {{ $kamars->where('status','terisi')->count() }}
-                        </span>
+                        <span style="color: #16A34A;">• Tersedia: <span style="font-weight: 700;">{{ $kamars->where('status','tersedia')->count() }}</span></span>
+                        <span style="color: #DC2626;">• Terisi: <span style="font-weight: 700;">{{ $kamars->where('status','terisi')->count() }}</span></span>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
