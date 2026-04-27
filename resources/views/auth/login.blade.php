@@ -73,6 +73,10 @@
                 @enderror
             </div>
 
+            <p class="text-xs text-left text-gray-500 mt-5">
+                <a href="{{ route('password.request') }}" class="text-blue-500 font-medium">Lupa Password ?</a>
+            </p>
+
             <!-- BUTTON -->
             <button class="w-full mt-5 bg-blue-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-600 transition">
                 Sign In
@@ -103,6 +107,7 @@
                 Don’t have an account?
                 <a href="{{ route('register') }}" class="text-blue-500 font-medium">Sign Up</a>
             </p>
+            
 
         </form>
 
