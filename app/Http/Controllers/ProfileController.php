@@ -6,15 +6,11 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request)
     {
         if ($request->user()->role === 'admin') {
@@ -28,45 +24,85 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    private function uploadProfilePhoto(Request $request): ?string
     {
-        $user = $request->user();
-
-        $validated = $request->validated();
-
-        if ($request->boolean('remove_photo')) {
-            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-                Storage::disk('public')->delete($user->photo);
-            }
-
-            $validated['photo'] = null;
+        if (! $request->hasFile('photo')) {
+            return null;
         }
 
-        if ($request->hasFile('photo')) {
-            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-                Storage::disk('public')->delete($user->photo);
-            }
+        $file = $request->file('photo');
 
-            $validated['photo'] = $request->file('photo')->store('profile-photos', 'public');
+        if (! $file || ! $file->isValid()) {
+            return null;
         }
 
-        $user->fill($validated);
+        $uploadPath = base_path('../storage/profile-photos');
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
+        if (! File::exists($uploadPath)) {
+            File::makeDirectory($uploadPath, 0755, true);
         }
 
-        $user->save();
+        $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $file->move($uploadPath, $filename);
+
+        return 'profile-photos/' . $filename;
     }
 
-    /**
-     * Delete the user's account.
-     */
+    private function deletePublicFile(?string $path): void
+    {
+        if (! $path) {
+            return;
+        }
+
+        $filePath = base_path('../storage/' . $path);
+
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
+    }
+
+	public function update(ProfileUpdateRequest $request): RedirectResponse
+	{
+	    $user = $request->user();
+	
+	    $validated = $request->validated();
+	
+	    unset($validated['photo'], $validated['remove_photo']);
+	
+	    if ($request->boolean('remove_photo')) {
+	        $this->deletePublicFile($user->photo);
+	        $validated['photo'] = null;
+	    }
+	
+	    if ($request->hasFile('photo')) {
+	        $file = $request->file('photo');
+	
+	        if ($file && $file->isValid()) {
+	            $this->deletePublicFile($user->photo);
+	
+	            $photoPath = $this->uploadProfilePhoto($request);
+	
+	            if ($photoPath) {
+	                $validated['photo'] = $photoPath;
+	            }
+	        }
+	    }
+	
+	    $validated['phone'] = $request->phone;
+	    $validated['notify_empty_room_email'] = $request->boolean('notify_empty_room_email');
+	    $validated['notify_empty_room_whatsapp'] = $request->boolean('notify_empty_room_whatsapp');
+	
+	    $user->forceFill($validated);
+	
+	    if ($user->isDirty('email')) {
+	        $user->email_verified_at = null;
+	    }
+	
+	    $user->save();
+	
+	    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+	}
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -74,6 +110,8 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        $this->deletePublicFile($user->photo);
 
         Auth::logout();
 

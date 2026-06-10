@@ -16,10 +16,15 @@
         <!-- TOP BADGE -->
         <div class="absolute top-2 left-2 right-2 flex justify-between items-center text-xs">
 
-            <!-- TIPE -->
+            <!-- KAMAR MANDI -->
             <span class="flex items-center gap-1 bg-white/90 px-2 py-1 rounded-md text-gray-700 text-[11px]">
                 <img src="{{ asset('images/logokamar.png') }}" class="w-3 h-3 object-contain">
-                {{ $kamar->tipe ?? 'Km. mandi luar' }}
+
+                @if($kamar->kamar_mandi)
+                    KM {{ ucfirst($kamar->kamar_mandi) }}
+                @else
+                    KM -
+                @endif
             </span>
 
             <!-- STATUS -->
@@ -31,23 +36,19 @@
 
         </div>
 
-        <!-- WATERMARK -->
-        <div class="absolute inset-0 flex items-center justify-center">
-            <p class="text-white/70 font-semibold text-sm">
-                RafaKost Property
-            </p>
-        </div>
 
         <!-- BOTTOM INFO -->
         <div class="absolute bottom-3 left-3 right-3 bg-white rounded-xl p-3 shadow">
-            <p class="font-semibold text-sm">{{ $kamar->nama }}</p>
+            <p class="font-semibold text-sm">
+                {{ $kamar->nama }}
+            </p>
 
             <p class="text-xs text-gray-500 flex items-center gap-1">
-                📍 {{ $kamar->lantai }}
+                📍 {{ $kamar->lantai ?: '-' }}
             </p>
 
             <div class="mt-2 bg-gray-100 text-xs px-2 py-1 rounded-md text-gray-700">
-                {{ $kamar->harga }}
+               Rp {{ $kamar->harga }}
             </div>
         </div>
 

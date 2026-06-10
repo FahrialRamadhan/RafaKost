@@ -1,0 +1,47 @@
+.confirm-popup {
+    border-radius: 18px !important;
+    padding: 34px 36px 28px !important;
+    width: 460px !important;
+}
+
+.confirm-popup-title {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+}
+
+.confirm-popup-text {
+    font-size: 14px !important;
+    color: #8b8b8b !important;
+    line-height: 1.6 !important;
+}
+
+.confirm-btn-blue {
+    background: #0ea5e9 !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    padding: 10px 28px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-left: 8px !important;
+}
+
+.confirm-btn-blue:hover {
+    background: #0284c7 !important;
+}
+
+.cancel-btn-soft {
+    background: #f3f4f6 !important;
+    color: #4b5563 !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    padding: 10px 28px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    margin-right: 8px !important;
+}
+
+.cancel-btn-soft:hover {
+    background: #e5e7eb !important;
+}

@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'biometric' => [
+        'url' => env('BIOMETRIC_API_URL'),
+        'secret' => env('BIOMETRIC_API_SECRET'),
+    ],
+
 ];

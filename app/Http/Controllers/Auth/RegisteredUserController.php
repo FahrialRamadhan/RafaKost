@@ -28,24 +28,34 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
-    }
+	public function store(Request $request): RedirectResponse
+	{
+	    $request->validate([
+	        'name' => ['required', 'string', 'max:255'],
+	        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+	        'password' => [
+	            'required',
+	            'confirmed',
+	            Rules\Password::min(8)->mixedCase()->numbers(),
+	        ],
+	    ], [
+	        'email.unique' => 'Email sudah terdaftar.',
+	        'password.min' => 'Password minimal 8 karakter.',
+	        'password.mixed' => 'Password harus mengandung huruf besar dan huruf kecil.',
+	        'password.numbers' => 'Password harus mengandung angka.',
+	        'password.confirmed' => 'Konfirmasi password tidak sama.',
+	    ]);
+	
+	    $user = User::create([
+	        'name' => $request->name,
+	        'email' => strtolower($request->email),
+	        'password' => Hash::make($request->password),
+	    ]);
+	
+	    event(new Registered($user));
+	
+	    Auth::login($user);
+	
+	    return redirect()->route('verification.notice');
+	}
 }

@@ -5,114 +5,124 @@
 
             <!-- LEFT (CARD IMAGE) -->
             <div class="hidden md:flex w-1/2">
-            <div class="w-full h-full min-h-[700px] rounded-[24px] shadow-xl overflow-hidden relative">
+                <div class="w-full h-full min-h-[700px] rounded-[24px] shadow-xl overflow-hidden relative">
 
-        <!-- image -->
-        <img src="/images/lorong.png"
-            class="absolute inset-0 w-full h-full object-cover">
+                    <!-- image -->
+                    <img src="/images/lorong.png"
+                        class="absolute inset-0 w-full h-full object-cover">
 
-        <div class="absolute inset-0 bg-gradient-to-t from-white/50 via-black/50 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-white/50 via-black/50 to-transparent"></div>
 
-        <!-- content -->
-        <div class="relative z-10 p-6 flex flex-col justify-between h-full">
+                    <!-- content -->
+                    <div class="relative z-10 p-6 flex flex-col justify-between h-full">
 
-            <!-- logo -->
-            <img src="/images/secondlogo.png" class="w-10 h-auto">
+                        <!-- logo -->
+                        <img src="/images/secondlogo.png" class="w-10 h-auto">
 
-            <!-- text -->
-            <h2 class="text-white text-3xl font-semibold leading-snug text-start p-5">
-                Tempat Tinggal Nyaman, Serasa di Rumah.
-            </h2>
-        </div>
+                        <!-- text -->
+                        <h2 class="text-white text-3xl font-semibold leading-snug text-start p-5">
+                            Tempat Tinggal Nyaman, Serasa di Rumah.
+                        </h2>
+                    </div>
 
-    </div>
-</div>
+                </div>
+            </div>
 
             <!-- RIGHT (FORM - NO CARD) -->
-           <div class="w-full md:w-1/2 flex items-center">
+            <div class="w-full md:w-1/2 flex items-center">
 
-    <div class="w-full max-w-md">
+                <div class="w-full max-w-md">
 
-        <!-- HEADER -->
-        <div class="mb-5">
+                    <!-- HEADER -->
+                    <div class="mb-5">
 
-    <!-- logo -->
-    <img src="/images/logo.png" class="w-[40px] h-auto mb-3">
+                        <!-- logo -->
+                        <img src="/images/logo.png" class="w-[40px] h-auto mb-3">
 
-    <!-- title -->
-    <h1 class="text-2xl font-bold text-gray-900">
-        Login Account
-    </h1>
+                        <!-- title -->
+                        <h1 class="text-2xl font-bold text-gray-900">
+                            Login Account
+                        </h1>
 
-    <!-- desc -->
-    <p class="text-sm text-gray-500 mt-2 leading-relaxed">
-        Temukan kenyamanan tinggal setiap hari dengan fasilitas lengkap
-        dan lingkungan yang mendukung.
-    </p>
+                        <!-- desc -->
+                        <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+                            Temukan kenyamanan tinggal setiap hari dengan fasilitas lengkap
+                            dan lingkungan yang mendukung.
+                        </p>
 
-</div>
+                    </div>
 
-        <!-- FORM -->
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+                    <!-- STATUS -->
+                    @if(session('status'))
+                        <div class="mb-4 p-3 rounded-lg bg-green-100 text-green-700 text-sm">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
-            <!-- EMAIL -->
-            <div>
-                <label class="text-sm text-gray-600">Your email</label>
-                <input type="email" name="email" value="{{ old('email') }}"
-                    class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <!-- FORM -->
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <!-- EMAIL -->
+                        <div>
+                            <label class="text-sm text-gray-600">Your email</label>
+                            <input type="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                required
+                                autofocus
+                                class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+                            @error('email')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+						<!-- PASSWORD -->
+						<div class="mt-3">
+						    <div class="flex items-center justify-between">
+						        <label class="text-sm text-gray-600">Password</label>
+						
+						        @if (Route::has('password.request'))
+						            <a href="{{ route('password.request') }}"
+						                class="text-xs text-blue-500 font-medium hover:text-blue-600">
+						                Forgot password?
+						            </a>
+						        @endif
+						    </div>
+						
+						    <input type="password"
+						        name="password"
+						        required
+						        class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+						
+						    @error('password')
+						        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+						    @enderror
+						</div>
+
+                        <!-- BUTTON -->
+                        <button class="w-full mt-5 bg-blue-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-600 transition">
+                            Sign In
+                        </button>
+
+                        <!-- DIVIDER -->
+                        <div class="flex items-center my-5">
+                            <div class="flex-1 h-px bg-gray-200"></div>
+                            <span class="px-3 text-xs text-gray-400">Or continue with</span>
+                            <div class="flex-1 h-px bg-gray-200"></div>
+                        </div>
+
+                        <!-- FOOTER -->
+                        <p class="text-xs text-center text-gray-500 mt-5">
+                            Don’t have an account?
+                            <a href="{{ route('register') }}" class="text-blue-500 font-medium">Sign Up</a>
+                        </p>
+
+                    </form>
+
+                </div>
             </div>
-
-            <!-- PASSWORD -->
-            <div class="mt-3">
-                <label class="text-sm text-gray-600">Password</label>
-                <input type="password" name="password"
-                    class="w-full mt-1 px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                @error('email')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <p class="text-xs text-left text-gray-500 mt-5">
-                <a href="{{ route('password.request') }}" class="text-blue-500 font-medium">Lupa Password ?</a>
-            </p>
-
-            <!-- BUTTON -->
-            <button class="w-full mt-5 bg-blue-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-600 transition">
-                Sign In
-            </button>
-
-            <!-- DIVIDER -->
-            <div class="flex items-center my-5">
-                <div class="flex-1 h-px bg-gray-200"></div>
-                <span class="px-3 text-xs text-gray-400">Or continue with</span>
-                <div class="flex-1 h-px bg-gray-200"></div>
-            </div>
-
-            <!-- SOCIAL -->
-            <div class="flex gap-3">
-                <button type="button" class="flex-1 border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-50">
-                    Google
-                </button>
-                <button type="button" class="flex-1 border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-50">
-                    Github
-                </button>
-                <button type="button" class="flex-1 border border-gray-300 py-2 rounded-lg text-sm hover:bg-gray-50">
-                    Facebook
-                </button>
-            </div>
-
-            <!-- FOOTER -->
-            <p class="text-xs text-center text-gray-500 mt-5">
-                Don’t have an account?
-                <a href="{{ route('register') }}" class="text-blue-500 font-medium">Sign Up</a>
-            </p>
-            
-
-        </form>
-
-    </div>
-</div>
 
         </div>
     </div>
